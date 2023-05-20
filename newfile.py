@@ -1,0 +1,71 @@
+from PyQt5.QtCore import Qt 
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QPushButton, QRadioButton, QGroupBox, QVBoxLayout, QHBoxLayout, QButtonGroup 
+ 
+def show_result(): 
+ queGroupBox.hide() 
+ ansGroupBox.show() 
+ button.setText('Следующий вопрос') 
+ 
+def show_question(): 
+ ansGroupBox.hide() 
+ queGroupBox.show() 
+ button.setText('Ответить') 
+ RadioGroup.setExclusive(False) 
+ ans_btn1.setChecked(False) 
+ ans_btn2.setChecked(False) 
+ ans_btn3.setChecked(False) 
+ ans_btn4.setChecked(False) 
+ RadioGroup.setExclusive(True) 
+ 
+def start_text(): 
+ if button.text() == 'Ответить': 
+ show_result() 
+ else: 
+ show_question() 
+ 
+ 
+ 
+app = QApplication([]) 
+mw = QWidget() 
+mw.setWindowTitle('memory card') 
+mw.resize(350, 300) 
+question = QLabel('Вопрос') 
+queGroupBox = QGroupBox('Варианты') 
+ans_btn1 = QRadioButton('Ответ 1') 
+ans_btn2 = QRadioButton('Ответ 2') 
+ans_btn3 = QRadioButton('Ответ 3') 
+ans_btn4 = QRadioButton('Ответ 4') 
+RadioGroup = QButtonGroup() 
+RadioGroup.addButton(ans_btn1) 
+RadioGroup.addButton(ans_btn2) 
+RadioGroup.addButton(ans_btn3) 
+RadioGroup.addButton(ans_btn4) 
+ans_v_line1 = QVBoxLayout() 
+ans_v_line2 = QVBoxLayout() 
+ans_h_line = QVBoxLayout() 
+ans_v_line1.addWidget(ans_btn1, alignment=Qt.AlignCenter) 
+ans_v_line1.addWidget(ans_btn3, alignment=Qt.AlignCenter) 
+ans_v_line2.addWidget(ans_btn2, alignment=Qt.AlignCenter) 
+ans_v_line2.addWidget(ans_btn4, alignment=Qt.AlignCenter) 
+ans_h_line.addLayout(ans_v_line1) 
+ans_h_line.addLayout(ans_v_line2) 
+queGroupBox.setLayout(ans_h_line) 
+ansGroupBox = QGroupBox('Правильный ответ') 
+result_text = QLabel('Правильно/Неправильно') 
+answer = QLabel('Правильный ответ') 
+txt_v_line = QVBoxLayout() 
+txt_v_line.addWidget(result_text, alignment=Qt.AlignLeft) 
+txt_v_line.addWidget(answer, alignment=Qt.AlignCenter) 
+txt_v_line.setSpacing(10) 
+ansGroupBox.setLayout(txt_v_line) 
+ansGroupBox.hide() 
+button = QPushButton('Ответить') 
+v_line = QVBoxLayout() 
+v_line.addWidget(question, alignment=Qt.AlignCenter) 
+v_line.addWidget(queGroupBox, alignment=Qt.AlignCenter) 
+v_line.addWidget(ansGroupBox, alignment=Qt.AlignCenter) 
+v_line.addWidget(button, alignment=Qt.AlignCenter) 
+mw.setLayout(v_line) 
+button.clicked.connect(start_text) 
+mw.show() 
+app.exec_()
